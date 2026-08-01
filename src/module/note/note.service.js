@@ -17,3 +17,12 @@ export const updateNoteService = async (data, noteId, userId) => {
     )
     return note
 }
+// REPLACE SINGLE NOTE
+export const replaceNoteService = async (data, noteId, userId) => {
+    const note = await NoteModel.findOneAndReplace(
+        { _id: noteId, userId: userId },
+        { $set: data },
+        { new: true }
+    )
+    return note
+}
