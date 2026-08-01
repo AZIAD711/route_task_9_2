@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema ,model} from "mongoose";
 const noData = "NO DATA FOUND !"
 // NOTE SCHEMA 
 const noteSchema = new Schema({
@@ -40,5 +40,5 @@ const noteSchema = new Schema({
         versionKey: "version",
     }
 )
-const NoteModel = mongoose.model("Note", noteSchema)
+const NoteModel = model("Note", noteSchema)
 export default NoteModel

@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema ,model} from "mongoose";
 const noData = "NO DATA FOUND !"
 // USER SCHEMA 
 const userSchema = new Schema({
@@ -52,5 +52,5 @@ const userSchema = new Schema({
         versionKey: "version",
     }
 )
-const UserModel = mongoose.model("User", userSchema)
+const UserModel = model("User", userSchema)
 export default UserModel
