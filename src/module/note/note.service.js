@@ -59,3 +59,11 @@ export const paginateSortService = async (userId, page, limit) => {
 
     return notes;
 };
+// GET NOTE BY ID 
+export const getNoteByIdService = async (noteId , userId)=>{
+    const note = await NoteModel.findOne ({
+        _id : noteId,
+        userId : userId
+    })
+    return note
+}
