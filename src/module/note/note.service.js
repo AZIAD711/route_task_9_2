@@ -75,4 +75,15 @@ export const searchNoteByContentService = async (content , userId)=>{
     })
     return note
 } 
+// GET NOTE WITH USER DATA 
+export const noteWithUserService = async (userId) => {
+    const notes = await NoteModel.find({ userId })
+        .select("title userId createdAt")
+        .populate({
+            path: "userId",
+            select: "email"
+        });
+
+    return notes;
+};
 
