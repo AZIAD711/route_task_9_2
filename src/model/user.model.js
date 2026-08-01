@@ -1,4 +1,6 @@
 import { Schema ,model} from "mongoose";
+import { UserRole } from "../common/enum/role.js";
+import { StatusAccount } from "../common/enum/status-account.js";
 const noData = "NO DATA FOUND !"
 // USER SCHEMA 
 const userSchema = new Schema({
@@ -40,6 +42,18 @@ const userSchema = new Schema({
         max: [60, "AGE MUST BE AT MOST 60"],
         min: [18, "AGE MUST BE AT LEAST 18"],
         default: 18
+    },
+    // ROLE 
+    role : {
+        type : String ,
+        enum : Object.values(UserRole),
+        default : UserRole.USER
+    },
+    // STATUS ACCOUNT 
+    statusAccount : {
+        type : String ,
+        enum : Object.values(StatusAccount),
+        default : StatusAccount.ACTIVE
     },
 },
     {
