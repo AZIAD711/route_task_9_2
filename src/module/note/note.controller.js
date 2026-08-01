@@ -1,4 +1,4 @@
-import { createNoteService, replaceNoteService, updateAllTitleService, updateNoteService } from "./note.service.js"
+import { createNoteService, deleteNoteService, replaceNoteService, updateAllTitleService, updateNoteService } from "./note.service.js"
 // CREATE NOTE 
 export const createNoteController = async (request, response) => {
     try {
@@ -61,6 +61,23 @@ export const updateAllTitleController = async (request, response) => {
         const note = await updateAllTitleService(data, userId)
         response.status(200).json({
             message: "✅ NOTE UPDATED SUCCESSFULLY !",
+            result: note
+        })
+    }
+    catch (error) {
+        response.status(500).json({
+            message: "Internal Server Error !",
+            error: error.message
+        })
+    }
+}
+// DELETE OF NOTES
+export const deleteNoteController = async (request, response) => {
+    try {
+        const userId = request.user._id
+        const note = await deleteNoteService(request.params.id, userId)
+        response.status(200).json({
+            message: "✅ NOTE DELETED SUCCESSFULLY !",
             result: note
         })
     }

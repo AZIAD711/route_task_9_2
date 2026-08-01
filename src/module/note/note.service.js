@@ -40,3 +40,11 @@ export const updateAllTitleService = async (data, userId) => {
     )
     return note
 }
+// DELETE NOTE 
+export const deleteNoteService = async (noteId, userId) => {
+    const note = await NoteModel.findOneAndDelete({
+        _id: noteId,
+        userId: userId
+    })
+    return note
+}
