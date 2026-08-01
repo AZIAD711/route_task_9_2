@@ -133,4 +133,12 @@ export const aggregateNotesService = async (userId, title) => {
 
     return await NoteModel.aggregate(pipeline);
 };
+// DELETE ALL NOTES OF A USER
+export const deleteAllNotesService = async (userId) => {
+    const result = await NoteModel.deleteMany({
+        userId
+    });
+
+    return result;
+};
 
