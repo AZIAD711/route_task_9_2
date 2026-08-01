@@ -1,4 +1,4 @@
-import { createNoteService, deleteNoteService, getNoteByIdService, paginateSortService, replaceNoteService, updateAllTitleService, updateNoteService } from "./note.service.js"
+import { createNoteService, deleteNoteService, getNoteByIdService, paginateSortService, replaceNoteService, searchNoteByContentService, updateAllTitleService, updateNoteService } from "./note.service.js"
 // CREATE NOTE 
 export const createNoteController = async (request, response) => {
     try {
@@ -113,13 +113,29 @@ export const paginateSortController = async (request, response, next) => {
     };
 }
 // GET NOTE BY ID
-
 export const getNoteByIdController = async (request, response) => {
     try {
         const userId = request.user._id
         const note = await getNoteByIdService(request.params.id, userId)
         response.status(200).json({
             message: "✅ NOTE RETRIEVED SUCCESSFULLY !",
+            result: note
+        })
+    }
+    catch (error) {
+        response.status(500).json({
+            message: "Internal Server Error !",
+            error: error.message
+        })
+    }
+}
+// SEARCH NOTE BY CONTENT 
+export const searchNoteByContentController = async (request, response) => {
+    try {
+        const userId = request.user._id
+        const note = await searchNoteByContentService(request.query.content, userId)
+        response.status(200).json({
+            message: "✅ NOTE SEARCHED SUCCESSFULLY !",
             result: note
         })
     }

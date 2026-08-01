@@ -67,3 +67,12 @@ export const getNoteByIdService = async (noteId , userId)=>{
     })
     return note
 }
+// SEARCH NOTE BY CONTENT
+export const searchNoteByContentService = async (content , userId)=>{
+    const note = await NoteModel.find({
+        content : { $regex: content, $options: "i" },
+        userId : userId
+    })
+    return note
+} 
+
