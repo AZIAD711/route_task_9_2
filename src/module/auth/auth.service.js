@@ -37,3 +37,17 @@ const emailExist = await UserModel.findOne({ email: data.email })
     })
     return { accessToken, refreshToken }
 }
+// UPDATE PROFILE 
+export const updateProfileService = async (data, userId) => {
+    const user = await UserModel.findByIdAndUpdate(userId, { ...data, password: undefined }, { new: true })
+    if (!user) {
+        throw new Error("USER NOT FOUND !")
+    }
+    if(data.password){
+        throw new Error("PASSWORD CANNOT BE UPDATED !")
+    }
+    if(data.statusAccount){
+        throw new Error("STATUS ACCOUNT CANNOT BE UPDATED !")
+    }
+    return user
+}
