@@ -8,3 +8,12 @@ export const createNoteService = async (data,userId) => {
     })
     return note
 }
+// UPDATE SINGLE NOTE
+export const updateNoteService = async (data, noteId, userId) => {
+    const note = await NoteModel.findOneAndUpdate(
+        { _id: noteId, userId: userId },
+        { $set: data },
+        { new: true }
+    )
+    return note
+}
