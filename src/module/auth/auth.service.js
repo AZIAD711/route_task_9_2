@@ -59,3 +59,11 @@ export const deleteProfileService = async (userId) => {
     }
     return user
 }
+// GET PROFILE
+export const getProfileService = async (userId)=>{
+    const user = await UserModel.findById(userId)
+    if (!user) {
+        throw new Error("USER NOT FOUND !")
+    }
+    return user
+}

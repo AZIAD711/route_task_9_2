@@ -1,4 +1,4 @@
-import {deleteProfileService, loginService, signupService, updateProfileService} from "./auth.service.js"
+import {deleteProfileService, getProfileService, loginService, signupService, updateProfileService} from "./auth.service.js"
 // SIGN UP
 export const signupController = async(request,response)=>{
     try{
@@ -59,6 +59,23 @@ export const deleteProfileController = async(request,response)=>{
         const result = await deleteProfileService(userId)
         response.status(200).json({
             message:"✅ PROFILE DELETED SUCCESSFULLY !",
+            result:result
+        })
+    }
+    catch(error){
+        response.status(500).json({
+            message:"Internal Server Error !",
+            error:error.message
+        })
+    }
+}
+// GET PROFILE
+export const getProfileController = async(request,response)=>{
+    try{
+        const userId = request.user._id
+        const result = await getProfileService(userId)
+        response.status(200).json({
+            message:"✅ PROFILE RETRIEVED SUCCESSFULLY !",
             result:result
         })
     }
