@@ -48,3 +48,14 @@ export const deleteNoteService = async (noteId, userId) => {
     })
     return note
 }
+// PAGINATE AND SORT NOTES
+export const paginateSortService = async (userId, page, limit) => {
+    const skip = (page - 1) * limit;
+
+    const notes = await NoteModel.find({ userId })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    return notes;
+};

@@ -1,4 +1,4 @@
-import { createNoteController, deleteNoteController, replaceNoteController, updateAllTitleController, updateNoteController }from "./note.controller.js"
+import { createNoteController, deleteNoteController, paginateSortController, replaceNoteController, updateAllTitleController, updateNoteController }from "./note.controller.js"
 import {authencation,authorization} from "../../common/middleware/auth.middleware.js"
 import express from "express"
 import { UserRole } from "../../common/enum/role.js"
@@ -8,4 +8,5 @@ noteRouter.patch("/update/:id", authencation(), authorization(UserRole.USER,User
 noteRouter.put("/replace/:id", authencation(), authorization(UserRole.USER,UserRole.ADMIN), replaceNoteController)
 noteRouter.put("/all", authencation(), authorization(UserRole.USER,UserRole.ADMIN), updateAllTitleController)
 noteRouter.delete("/delete/:id", authencation(), authorization(UserRole.USER,UserRole.ADMIN), deleteNoteController)
+noteRouter.get("/paginate-sort", authencation(), authorization(UserRole.USER,UserRole.ADMIN), paginateSortController)
 export default noteRouter

@@ -1,4 +1,4 @@
-import { createNoteService, deleteNoteService, replaceNoteService, updateAllTitleService, updateNoteService } from "./note.service.js"
+import { createNoteService, deleteNoteService, paginateSortService, replaceNoteService, updateAllTitleService, updateNoteService } from "./note.service.js"
 // CREATE NOTE 
 export const createNoteController = async (request, response) => {
     try {
@@ -88,4 +88,27 @@ export const deleteNoteController = async (request, response) => {
         })
     }
 }
+// DELETE OF NOTES
+export const paginateSortController = async (request, response, next) => {
 
+    try {
+        const { page = 1, limit = 10 } = request.query;
+
+        const notes = await paginateSortService(
+            request.user._id,
+            Number(page),
+            Number(limit)
+        );
+
+        response.status(200).json({
+            message: "✅  NOTE PAGINATED AND SORTED SUCCESSFULLY !",
+            data: notes
+        });
+    }
+    catch (error) {
+        response.status(500).json({
+            message: "Internal Server Error !",
+            error: error.message
+        })
+    };
+}
