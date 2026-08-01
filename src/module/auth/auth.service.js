@@ -51,3 +51,11 @@ export const updateProfileService = async (data, userId) => {
     }
     return user
 }
+// DELETE PROFILE
+export const deleteProfileService = async (userId) => {
+    const user = await UserModel.findByIdAndDelete(userId)
+    if (!user) {
+        throw new Error("USER NOT FOUND !")
+    }
+    return user
+}
