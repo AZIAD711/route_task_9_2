@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import NoteModel from "../../model/note.model.js"
 // CREATE NOTE 
 export const createNoteService = async (data, userId) => {
@@ -85,5 +86,51 @@ export const noteWithUserService = async (userId) => {
         });
 
     return notes;
+};
+// aggregate Notes
+export const aggregateNotesService = async (userId, title) => {
+    const pipeline = [
+        {
+            $match: {
+                userId: new mongoose.Types.ObjectId(userId)
+            }
+        }
+    ];
+    if (title) {
+        pipeline.push({
+            $match: {
+                title: {
+                    $regex: title,
+                    $options: "i"
+                }
+            }
+        });
+    }
+
+    pipeline.push(
+        {
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user"
+            }
+        },
+        {
+            $unwind: "$user"
+        },
+        {
+            $project: {
+                _id: 1,
+                title: 1,
+                content: 1,
+                createdAt: 1,
+                "user.name": 1,
+                "user.email": 1
+            }
+        }
+    );
+
+    return await NoteModel.aggregate(pipeline);
 };
 

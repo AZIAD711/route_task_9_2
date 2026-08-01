@@ -1,4 +1,4 @@
-import { createNoteService, deleteNoteService, getNoteByIdService, noteWithUserService, paginateSortService, replaceNoteService, searchNoteByContentService, updateAllTitleService, updateNoteService } from "./note.service.js"
+import { aggregateNotesService, createNoteService, deleteNoteService, getNoteByIdService, noteWithUserService, paginateSortService, replaceNoteService, searchNoteByContentService, updateAllTitleService, updateNoteService } from "./note.service.js"
 // CREATE NOTE 
 export const createNoteController = async (request, response) => {
     try {
@@ -162,4 +162,22 @@ export const noteWithUserController = async (request, response) => {
             error: error.message
         })
     }
+}
+// aggregate Notes
+export const aggregateNotesController = async (request, response) => {
+    try {
+        const userId = request.user._id;
+        const title = request.query.title || null;
+        const notes = await aggregateNotesService(userId, title);
+        response.status(200).json({
+            message: "✅ NOTES AGGREGATED SUCCESSFULLY !",
+            result: notes
+        });
+    }
+    catch (error) {
+        response.status(500).json({
+            message: "Internal Server Error !",
+            error: error.message
+        });
+    }   
 }
